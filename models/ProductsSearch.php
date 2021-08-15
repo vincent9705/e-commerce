@@ -58,6 +58,7 @@ class ProductsSearch extends Products
         }
 
         // grid filtering conditions
+        $query->andWhere(['deleted_at' => null]);
         $query->andFilterWhere([
             'id' => $this->id,
             'price' => $this->price,

@@ -23,9 +23,6 @@ use Yii;
  *
  * @property Cart[] $carts
  * @property OrdersDetails[] $ordersDetails
- * @property Admin $createdBy
- * @property Admin $deletedBy
- * @property Admin $updatedBy
  * @property Stocks[] $stocks
  */
 class Products extends \yii\db\ActiveRecord
@@ -47,12 +44,8 @@ class Products extends \yii\db\ActiveRecord
             [['long_desc'], 'string'],
             [['price'], 'number'],
             [['created_at', 'updated_at', 'deleted_at'], 'safe'],
-            [['created_by', 'updated_by', 'deleted_by'], 'required'],
             [['created_by', 'updated_by', 'deleted_by'], 'integer'],
             [['product_code', 'category', 'short_desc', 'photo_url'], 'string', 'max' => 255],
-            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => Admin::className(), 'targetAttribute' => ['created_by' => 'id']],
-            [['deleted_by'], 'exist', 'skipOnError' => true, 'targetClass' => Admin::className(), 'targetAttribute' => ['deleted_by' => 'id']],
-            [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => Admin::className(), 'targetAttribute' => ['updated_by' => 'id']],
         ];
     }
 
@@ -96,36 +89,6 @@ class Products extends \yii\db\ActiveRecord
     public function getOrdersDetails()
     {
         return $this->hasMany(OrdersDetails::className(), ['product_id' => 'id']);
-    }
-
-    /**
-     * Gets query for [[CreatedBy]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCreatedBy()
-    {
-        return $this->hasOne(Admin::className(), ['id' => 'created_by']);
-    }
-
-    /**
-     * Gets query for [[DeletedBy]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getDeletedBy()
-    {
-        return $this->hasOne(Admin::className(), ['id' => 'deleted_by']);
-    }
-
-    /**
-     * Gets query for [[UpdatedBy]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUpdatedBy()
-    {
-        return $this->hasOne(Admin::className(), ['id' => 'updated_by']);
     }
 
     /**

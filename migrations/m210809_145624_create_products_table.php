@@ -29,10 +29,6 @@ class m210809_145624_create_products_table extends Migration
 			'deleted_by'   => $this->integer()->unsigned()->notNull(),
 		]);
 
-		$this->addForeignKey('products_created_by_fk', 'products', 'created_by', 'admin', 'id');
-		$this->addForeignKey('products_updated_by_fk', 'products', 'updated_by', 'admin', 'id');
-		$this->addForeignKey('products_deleted_by_fk', 'products', 'deleted_by', 'admin', 'id');
-
 		$this->createIndex('id', 'products', ['id']);
 		$this->createIndex('product_code', 'products', ['product_code']);
 		$this->createIndex('category', 'products', ['category']);

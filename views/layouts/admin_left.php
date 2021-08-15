@@ -1,6 +1,7 @@
 <?php
 use yii\bootstrap\Nav;
 
+$user_image_url = Yii::getAlias('@web') .  '/img/admin.png';
 ?>
 <aside class="main-sidebar">
 
@@ -9,7 +10,7 @@ use yii\bootstrap\Nav;
 		<!-- Sidebar user panel -->
 		<div class="user-panel">
 			<div class="pull-left image">
-				<img src="../img/admin.png" class="img-circle" alt="User Image"/>
+				<img src=<?= $user_image_url ?> class="img-circle" alt="User Image"/>
 			</div>
 			<div class="pull-left info">
 				<p><?= Yii::$app->admin->identity->username; ?></p>
@@ -24,9 +25,9 @@ use yii\bootstrap\Nav;
 				'options' => ['class' => 'sidebar-menu'],
 				'items' => [
 					['label' => '<i class="fa fa-home"></i><span>Dashboard</span>', 'url' => ['/back/dashboard']],
-					['label' => '<i class="fa fa-gift"></i><span>Products</span>', 'url' => ['/gii']],
-					['label' => '<i class="fa fa-sitemap"></i><span>Stocks</span>', 'url' => ['/debug']],
-					['label' => '<i class="fa fa-users"></i><span>Admin Users</span>', 'url' => ['/debug']],
+					['label' => '<i class="fa fa-shopping-bag"></i><span>Products</span>', 'url' => ['/products']],
+					['label' => '<i class="fa fa-sitemap"></i><span>Stocks</span>', 'url' => ['/admin']],
+					['label' => '<i class="fa fa-users"></i><span>Admin Users</span>', 'url' => ['/admin']],
 					[
 						'label' => '<i class="fa fa-sign-out"></i><span>Logout</span>', //for basic
 						'url' => ['/back/logout'],

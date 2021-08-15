@@ -25,9 +25,6 @@ class m210809_145648_create_stocks_table extends Migration
 		]);
 
 		$this->addForeignKey('stocks_product_id_fk', 'stocks', 'product_id', 'products', 'id');
-		$this->addForeignKey('stocks_created_by_fk', 'stocks', 'created_by', 'admin', 'id');
-		$this->addForeignKey('stocks_updated_by_fk', 'stocks', 'updated_by', 'admin', 'id');
-		$this->addForeignKey('stocks_deleted_by_fk', 'stocks', 'deleted_by', 'admin', 'id');
 
 		$this->createIndex('id', 'stocks', ['id']);
 		$this->createIndex('product_id', 'stocks', ['product_id']);

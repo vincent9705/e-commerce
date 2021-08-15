@@ -16,7 +16,8 @@ use dmstr\widgets\Alert;
         <?=
         Breadcrumbs::widget(
             [
-                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                'homeLink' => ['url'=> '@web/back/dashboard', 'label'=>'Dashboard'], 
+                'links'    => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
             ]
         ) ?>
     </section>
