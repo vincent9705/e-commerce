@@ -35,11 +35,11 @@ class Stocks extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['product_id', 'created_by', 'updated_by', 'deleted_by'], 'required'],
+            [['product_id'], 'required'],
             [['product_id', 'created_by', 'updated_by', 'deleted_by'], 'integer'],
             [['quantity'], 'number'],
             [['created_at', 'updated_at', 'deleted_at'], 'safe'],
-            [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Products::className(), 'targetAttribute' => ['product_id' => 'id']],
+            [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Products::className(), 'targetAttribute' => ['product_id' => 'id']],            
         ];
     }
 

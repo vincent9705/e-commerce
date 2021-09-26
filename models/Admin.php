@@ -204,6 +204,6 @@ class Admin extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 		$result->last_login = date("Y-m-d H:i:s");
 
 		if (!$result->save())
-			throw new Exception($result->getFristError(), 1);
+			throw new \Exception($result->getFristError(), 1);
 	}
 }

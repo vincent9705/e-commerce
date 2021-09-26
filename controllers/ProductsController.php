@@ -64,11 +64,16 @@ class ProductsController extends Controller
 
 	public function actionUpdate($id)
 	{
-		$model = $this->findModel($id);
+		$model   = $this->findModel($id);
+		$rmb_url =  $model->photo_url;
 
-		if ($model->load(Yii::$app->request->post()) && $model->save()) {
-			$this->uploadImg($model);
-			return $this->redirect(['view', 'id' => $model->id]);
+		if ($model->load(Yii::$app->request->post())) {
+			$model->photo_url = $rmb_url;
+			if ($model->save())
+			{
+				$this->uploadImg($model);
+				return $this->redirect(['view', 'id' => $model->id]);
+			}
 		}
 
 		return $this->render('update', [
@@ -82,7 +87,7 @@ class ProductsController extends Controller
 		$model->deleted_at = date("Y-m-d H:i:s");
 
 		if (!$model->save())
-						throw new \Exception(current($model->getFirstErrors()));
+			throw new \Exception(current($model->getFirstErrors()));
 
 		return $this->redirect(['index']);
 	}

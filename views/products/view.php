@@ -41,9 +41,20 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'created_at',
             'updated_at',
-            'created_by',
-            'updated_by',
-            'deleted_by',
+            [
+                'attribute' => 'created_by',
+                'value' => function ($model) {
+                    return  $model->getEditor($model->created_by);
+                },
+            ],
+            [
+                'attribute' => 'updated_by',
+                'value' => function ($model) {
+                    return  $model->getEditor($model->created_by);
+                },
+            ],
+            //'created_by',
+            //'updated_by',
         ],
     ]) ?>
 

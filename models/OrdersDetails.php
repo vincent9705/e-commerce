@@ -8,7 +8,7 @@ use Yii;
  * This is the model class for table "orders_details".
  *
  * @property int $id
- * @property int $oder_id
+ * @property int $order_id
  * @property int $product_id
  * @property float|null $price
  * @property float|null $quantity
@@ -36,12 +36,12 @@ class OrdersDetails extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['oder_id', 'product_id'], 'required'],
-            [['oder_id', 'product_id'], 'integer'],
+            [['order_id', 'product_id'], 'required'],
+            [['order_id', 'product_id'], 'integer'],
             [['price', 'quantity'], 'number'],
             [['created_at', 'updated_at', 'deleted_at'], 'safe'],
             [['status'], 'string', 'max' => 255],
-            [['oder_id'], 'exist', 'skipOnError' => true, 'targetClass' => Orders::className(), 'targetAttribute' => ['oder_id' => 'id']],
+            [['order_id'], 'exist', 'skipOnError' => true, 'targetClass' => Orders::className(), 'targetAttribute' => ['order_id' => 'id']],
             [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Products::className(), 'targetAttribute' => ['product_id' => 'id']],
         ];
     }
@@ -53,7 +53,7 @@ class OrdersDetails extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'oder_id' => 'Oder ID',
+            'order_id' => 'Order ID',
             'product_id' => 'Product ID',
             'price' => 'Price',
             'quantity' => 'Quantity',
@@ -69,9 +69,9 @@ class OrdersDetails extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getOder()
+    public function getOrder()
     {
-        return $this->hasOne(Orders::className(), ['id' => 'oder_id']);
+        return $this->hasOne(Orders::className(), ['id' => 'order_id']);
     }
 
     /**

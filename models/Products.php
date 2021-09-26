@@ -3,7 +3,7 @@
 namespace app\models;
 
 use Yii;
-
+use app\models\Admin;
 /**
  * This is the model class for table "products".
  *
@@ -98,6 +98,20 @@ class Products extends \yii\db\ActiveRecord
      */
     public function getStocks()
     {
-        return $this->hasMany(Stocks::className(), ['product_id' => 'id']);
+        //return $this->hasMany(Stocks::className(), ['product_id' => 'id']);
+        $model = Stocks::find()->alias('s')->where(['s.deleted_at' => null, 's.product_id' => $this->id])
+            ->leftJoin(['od' => 'orders_details'], 'od.product_id = s.product_id')
+            ->select([
+                'stocks' => '(SUM(IF(s.quantity is null, 0, s.quantity)) - SUM(IF(od.quantity is null, 0, od.quantity)))'
+            ])->asArray()->one();
+        
+        return (!empty($model)) ? $model['stocks']: 0;
     }
+
+    public function getEditor($id)
+    {
+        $model = Admin::findOne($id);
+        return $model->user_name;
+    }
+
 }

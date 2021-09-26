@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
+$web_url = Yii::getAlias('@web');
 ?>
 
 <!DOCTYPE html>
@@ -18,7 +19,7 @@ use yii\bootstrap\ActiveForm;
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-	<link rel="stylesheet" href="../css/back/login.css">
+	<link rel="stylesheet" href="<?= $web_url ?>/css/back/login.css">
 </head>
 <body>
 	<div class="back-login col-md-12 container">

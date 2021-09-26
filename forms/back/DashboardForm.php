@@ -20,13 +20,14 @@ class DashboardForm extends Model
 	public $completed_count;
 	public $to_ship_count;
 	public $cancelled_count;
+	public $new_count;
 
 	private $_admin = false;
 
 	public function rules()
 	{
 		return [
-			[['product_count', 'user_count', 'admin_count', 'completed_count', 'to_ship_count', 'cancelled_count'], 'safe'],
+			[['product_count', 'user_count', 'admin_count', 'completed_count', 'to_ship_count', 'cancelled_count', 'new_count'], 'safe'],
 		];
 	}
 
@@ -50,13 +51,15 @@ class DashboardForm extends Model
 
 		$query = OrdersDetails::find()
 		->select([
-			'completed' => 'COUNT(IF(status= "completed" AND deleted_at is null, 1, 0))',
-			'to_ship'   => 'COUNT(IF(status= "to_ship" AND deleted_at is null, 1, 0))',
-			'cancelled' => 'COUNT(IF(status= "cancelled" AND deleted_at is null, 1, 0))'
+			'new'       => 'SUM(case when status = "new" then 1 else 0 end)',
+			'completed' => 'SUM(case when status = "completed" then 1 else 0 end)',
+			'to_ship'   => 'SUM(case when status = "to_ship" then 1 else 0 end)',
+			'cancelled' => 'SUM(case when status = "cancelled" then 1 else 0 end)'
 		])->asArray()->one();
-		$this->completed_count = $query['completed'];
-		$this->to_ship_count   = $query['to_ship'];
-		$this->cancelled_count = $query['cancelled'];
+		$this->completed_count = (!empty($query['completed'])) ? $query['completed'] : 0;
+		$this->to_ship_count   = (!empty($query['to_ship'])) ? $query['to_ship'] : 0;
+		$this->cancelled_count = (!empty($query['cancelled'])) ? $query['cancelled'] : 0;
+		$this->new_count       = (!empty($query['new'])) ? $query['new'] : 0;
 
 	}
 }

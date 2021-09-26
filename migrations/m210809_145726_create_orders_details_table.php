@@ -14,7 +14,7 @@ class m210809_145726_create_orders_details_table extends Migration
 	{
 		$this->createTable('orders_details', [
 			'id'         => $this->primaryKey()->unsigned(),
-			'oder_id'    => $this->integer()->unsigned()->notNull(),
+			'order_id'    => $this->integer()->unsigned()->notNull(),
 			'product_id' => $this->integer()->unsigned()->notNull(),
 			'price'      => $this->decimal(),
 			'quantity'   => $this->decimal(),
@@ -24,11 +24,11 @@ class m210809_145726_create_orders_details_table extends Migration
 			'deleted_at' => $this->dateTime(),
 		]);
 
-		$this->addForeignKey('orders_details_order_id_fk', 'orders_details', 'oder_id', 'orders', 'id');
+		$this->addForeignKey('orders_details_order_id_fk', 'orders_details', 'order_id', 'orders', 'id');
 		$this->addForeignKey('orders_details_product_id_fk', 'orders_details', 'product_id', 'products', 'id');
 
 		$this->createIndex('id', 'orders_details', ['id']);
-		$this->createIndex('oder_id', 'orders_details', ['oder_id']);
+		$this->createIndex('order_id', 'orders_details', ['order_id']);
 		$this->createIndex('product_id', 'orders_details', ['product_id']);
 		$this->createIndex('price', 'orders_details', ['price']);
 		$this->createIndex('quantity', 'orders_details', ['quantity']);

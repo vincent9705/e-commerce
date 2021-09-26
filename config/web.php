@@ -11,6 +11,7 @@ $config = [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
     ],
+    'defaultRoute' => '/shop/index',
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
@@ -21,9 +22,9 @@ $config = [
         ],
         'user' => [
             'class'=>'yii\web\User',
-            'identityClass' => 'app\models\user',
+            'identityClass' => 'app\models\users',
             'enableAutoLogin' => false,
-            'loginUrl' => ['user/index'],
+            'loginUrl' => ['shop/login'],
             'identityCookie' => [
                 'name' => '_user',
             ],

@@ -19,9 +19,9 @@ class m210809_145648_create_stocks_table extends Migration
 			'created_at'   => $this->dateTime(),
 			'updated_at'   => $this->dateTime()->append('ON UPDATE CURRENT_TIMESTAMP'),
 			'deleted_at'   => $this->dateTime(),
-			'created_by'   => $this->integer()->unsigned()->notNull(),
-			'updated_by'   => $this->integer()->unsigned()->notNull(),
-			'deleted_by'   => $this->integer()->unsigned()->notNull(),
+			'created_by'   => $this->integer()->unsigned(),
+			'updated_by'   => $this->integer()->unsigned(),
+			'deleted_by'   => $this->integer()->unsigned(),
 		]);
 
 		$this->addForeignKey('stocks_product_id_fk', 'stocks', 'product_id', 'products', 'id');

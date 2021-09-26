@@ -82,7 +82,9 @@ class Users extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public static function findIdentity($id)
     {
-        return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
+        $result = Users::find()->where(['id' => $id])->one();
+
+        return $result;
     }
 
     /**
@@ -105,15 +107,11 @@ class Users extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      * @param string $username
      * @return static|null
      */
-    public static function findByUsername($username)
+    public static function findByUsername($user_name)
     {
-        foreach (self::$users as $user) {
-            if (strcasecmp($user['username'], $username) === 0) {
-                return new static($user);
-            }
-        }
+        $result = Users::find()->where(['user_name' => $user_name])->one();
 
-        return null;
+        return $result;
     }
 
     /**
@@ -129,7 +127,7 @@ class Users extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public function getAuthKey()
     {
-        return $this->authKey;
+        return "";
     }
 
     /**
@@ -149,5 +147,14 @@ class Users extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function validatePassword($password)
     {
         return $this->password === $password;
+    }
+
+    public function setLastLogin()
+    {
+        $result = Users::find()->where(['id' => $this->id])->one();
+        $result->last_login = date("Y-m-d H:i:s");
+
+        if (!$result->save())
+            throw new \Exception($result->getFristError(), 1);
     }
 }
