@@ -10,6 +10,7 @@ use app\models\Cart;
 use app\models\Orders;
 use app\models\OrdersDetails;
 use yii\data\ArrayDataProvider;
+use yii\helpers\ArrayHelper;
 
 class IndexForm extends Model
 {
@@ -19,11 +20,13 @@ class IndexForm extends Model
 	public $offset          = 1;
 	public $date_from;
 	public $date_to;
+	public $categories;
+	public $filter_category;
 
 	public function rules()
 	{
 		return [
-			[['limit_per_page', 'page_no', 'total_pages', 'offset', 'date_from', 'date_to'], 'safe']
+			[['limit_per_page', 'page_no', 'total_pages', 'offset', 'date_from', 'date_to', 'categories', 'filter_category'], 'safe']
 		];
 	}
 
@@ -48,6 +51,7 @@ class IndexForm extends Model
 		$this->getPageInfo();
 
 		$model = Products::find()->where(['deleted_at' => null])
+			->andFilterWhere(['category' => $this->filter_category])
 			->select([
 				'id'    => 'id',
 				'product_code' => 'product_code',
@@ -57,13 +61,17 @@ class IndexForm extends Model
 				'price'        => 'price',
 				'photo_url'    => 'photo_url',
 				'stocks'       => '(SELECT SUM(s.quantity) - SUM(IF(od.quantity is null, 0, od.quantity)) FROM stocks AS s LEFT JOIN orders_details AS od ON s.product_id = od.product_id WHERE s.product_id = products.id and (od.status <> "cancel" or od.status is null))'
-			])->limit($this->limit_per_page)->offset($this->offset)->asArray()->all();
+			])
+			->limit($this->limit_per_page)
+			->offset($this->offset)
+			->asArray()->all();
 		return $model;
 	}
 
 	public function getPageInfo()
 	{
 		$model_count = Products::find()->where(['deleted_at' => null])
+			->andFilterWhere(['category' => $this->filter_category])
 			->select([
 				'rows' => 'count(*)'
 			])->asArray()->one();
@@ -252,7 +260,7 @@ class IndexForm extends Model
 	{
 		$model = Orders::find()->alias('o')->where(['o.deleted_at' => null, 'user_id' => Yii::$app->user->id])
 			->where(['>=' , 'DATE_FORMAT(o.created_at, "%Y-%m-%d")', $this->date_from])
-			->where(['<=', 'DATE_FORMAT(o.created_at, "%Y-%m-%d")', $this->date_to])
+			->andWhere(['<=', 'DATE_FORMAT(o.created_at, "%Y-%m-%d")', $this->date_to])
 			->leftJoin(['od' => 'orders_details'], 'od.order_id = o.id')
 			->leftJoin(['p' => 'products'], 'p.id = od.product_id')
 			->select([
@@ -268,5 +276,12 @@ class IndexForm extends Model
 			])->asArray()->all();
 		
 		return $model;
+	}
+
+	public function getCategories()
+	{
+		$model = Products::find()->where(['deleted_at' => null])->groupBy(['category'])->all();
+
+		$this->categories = ArrayHelper::map($model, 'category', 'category');
 	}
 }

@@ -17,10 +17,6 @@ $this->registerJs($this->render('_script.js'));
 
 	<?= $this->render('@app/views/_template/_alert'); ?>
 
-	<p>
-		<?= Html::a(Yii::t('app', 'Create Products'), ['create'], ['class' => 'btn btn-success']) ?>
-	</p>
-
 	<?php // echo $this->render('_search', ['model' => $searchModel]); 
 	?>
 

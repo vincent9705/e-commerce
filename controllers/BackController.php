@@ -46,7 +46,7 @@ class BackController extends Controller
 
 	public function actionLogout()
     {
-        Yii::$app->user->logout();
+        Yii::$app->admin->logout();
 
         return $this->redirect(['index']);
     }

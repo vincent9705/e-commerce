@@ -32,16 +32,19 @@ class ShopController extends Controller
         ];
     }
 
-    public function actionIndex($page_no = 1)
+    public function actionIndex($page_no = 1, $category = '')
     {
         $model = new IndexForm();
         $model->page_no = $page_no;
-        
+        $model->getCategories();
+        $model->filter_category = $category;
+
         return $this->render('index', [
             'items'        => $model->displayProducts(),
             'total_pages'  => $model->total_pages,
             'current_page' => $model->page_no,
             'cart_count'   => $model->getCartCount(),
+            'categories'   => $model->categories
         ]);
     }
 
@@ -104,6 +107,12 @@ class ShopController extends Controller
     public function actionAddToCart($product_id)
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
+
+        if (empty(Yii::$app->user->identity))
+        {
+            return $this->redirect(['login']);
+        }
+
         $model  = new IndexForm();
         $status = $model->addToCart($product_id);
 

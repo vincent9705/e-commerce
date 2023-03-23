@@ -25,10 +25,10 @@ $user_image_url = Yii::getAlias('@web') .  '/img/admin.png';
 				'options' => ['class' => 'sidebar-menu'],
 				'items' => [
 					['label' => '<i class="fa fa-home"></i><span>Dashboard</span>', 'url' => ['/back/dashboard']],
-					['label' => '<i class="fa fa-shopping-bag"></i><span>Products</span>', 'url' => ['/products']],
-					['label' => '<i class="fa fa-sitemap"></i><span>Stocks</span>', 'url' => ['/stocks']],
-					['label' => '<i class="fa fa-users"></i><span>Admin Users</span>', 'url' => ['/admin']],
-					['label' => '<i class="fa fa-users"></i><span>Orders Management</span>', 'url' => ['/orders']],
+					['label' => '<i class="fa fa-shopping-bag"></i><span>Products</span>', 'url' => ['/products/index']],
+					['label' => '<i class="fa fa-sitemap"></i><span>Stocks</span>', 'url' => ['/stocks/index']],
+					['label' => '<i class="fa fa-users"></i><span>Admin Users</span>', 'url' => ['/admin/index']],
+					['label' => '<i class="fa fa-users"></i><span>Orders Management</span>', 'url' => ['/orders/index']],
 					[
 						'label' => '<i class="fa fa-sign-out"></i><span>Logout</span>', //for basic
 						'url' => ['/back/logout'],
